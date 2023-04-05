@@ -113,6 +113,3 @@ RUN set -xe \
 COPY --chmod=755 entrypoint.sh /nas-tools/docker/entrypoint.sh
 
 ENTRYPOINT [ "/nas-tools/docker/entrypoint.sh" ]
-
-EXPOSE 3000
-VOLUME [ "/config" ]
