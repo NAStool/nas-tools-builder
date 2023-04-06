@@ -61,7 +61,7 @@ if [ $? -ne 0 ]; then
 else
     INFO "whisper.cpp 源码下载成功"
     INFO "安装编译软件包"
-    sudo apk add --no-cache build-base sdl2-dev alsa-utils
+    sudo apk add --no-cache build-base
     if [ $? -ne 0 ]; then
         ERROR "编译软件包安装失败"
         exit 1

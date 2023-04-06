@@ -8,50 +8,50 @@ docker exec -it --user nt nas-tools /bin/bash
 
 安装并下载tiny模型
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') tiny
+bash <(wget --no-check-certificate -qO- 'https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') tiny
 ```
 
 安装并下载tiny模型且使用国内源
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') tiny cn
+bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') tiny cn
 ```
 
 安装并下载base模型
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') base
+bash <(wget --no-check-certificate -qO- 'https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') base
 ```
 
 安装并下载base模型且使用国内源
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') base cn
+bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') base cn
 ```
 
 安装并下载small模型
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') small
+bash <(wget --no-check-certificate -qO- 'https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') small
 ```
 
 安装并下载small模型且使用国内源
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') small cn
+bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') small cn
 ```
 
 安装并下载medium模型
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') medium
+bash <(wget --no-check-certificate -qO- 'https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') medium
 ```
 
 安装并下载medium模型且使用国内源
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') medium cn
+bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') medium cn
 ```
 
 安装并下载large模型
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') large
+bash <(wget --no-check-certificate -qO- 'https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') large
 ```
 
 安装并下载large模型且使用国内源
 ```bash
-bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/DDS-Derek/VideoLab/raw/master/NAStool/scripts/Docker/Autosub/install') large cn
+bash <(wget --no-check-certificate -qO- 'https://ghproxy.com/https://github.com/NAStool/nas-tools-builder/raw/main/script/AutoSub/whisper.cpp/install') large cn
 ```
