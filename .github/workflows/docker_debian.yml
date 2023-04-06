@@ -118,13 +118,13 @@ jobs:
           NT_VERSION=$(wget --no-check-certificate -qO- https://raw.githubusercontent.com/NAStool/nas-tools/master/version.py | sed -ne "s/APP_VERSION\s=\s'v\(.*\)'/\1/gp")
           echo "app_version=$NT_VERSION" >> $GITHUB_ENV
 
-      - name: create debian tag
+      - name: Create debian tag
         run: |
           docker buildx imagetools create -t ${{ secrets.DOCKER_USERNAME }}/nas-tools:debian \
             ${{ secrets.DOCKER_USERNAME }}/nas-tools:debian-amd64 \
             ${{ secrets.DOCKER_USERNAME }}/nas-tools:debian-arm64v8
 
-      - name: create debian version tag
+      - name: Create version tag
         run: |
           docker buildx imagetools create -t ${{ secrets.DOCKER_USERNAME }}/nas-tools:${{ env.app_version }}-debian \
             ${{ secrets.DOCKER_USERNAME }}/nas-tools:${{ env.app_version }}-debian-amd64 \
