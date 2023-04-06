@@ -87,7 +87,11 @@ RUN set -xe && \
 
 ENV TZ="Asia/Shanghai" \
     NASTOOL_CONFIG="/config/config.yaml" \
+    NASTOOL_AUTO_UPDATE=true \
+    NASTOOL_CN_UPDATE=true \
+    NASTOOL_VERSION=master \
     REPO_URL="https://github.com/NAStool/nas-tools.git" \
+    PYPI_MIRROR="https://pypi.tuna.tsinghua.edu.cn/simple" \
     PUID=0 \
     PGID=0 \
     UMASK=000 \
@@ -110,6 +114,6 @@ RUN set -xe \
     && git config --global --add safe.directory ${WORKDIR} \
     && rm -rf ${WORKDIR}/docker/entrypoint.sh
 
-COPY --chmod=755 entrypoint.sh /nas-tools/docker/entrypoint.sh
+COPY --chmod=755 entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT [ "/nas-tools/docker/entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
