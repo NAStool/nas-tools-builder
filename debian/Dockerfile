@@ -1,8 +1,9 @@
-FROM debian:11
+FROM ddsderek/nas-tools:debian-base
 
 RUN set -xe && \
     export DEBIAN_FRONTEND="noninteractive" && \
     apt-get update -y && \
+    apt-get upgrade -y && \
     # locale
     apt-get install -y \
         apt-utils \
@@ -10,28 +11,6 @@ RUN set -xe && \
     locale-gen zh_CN.UTF-8 && \
     # ps
     apt-get install -y procps && \
-    # Python3.10
-    apt-get install -y \
-        build-essential \
-        zlib1g-dev \
-        libncurses5-dev \
-        libgdbm-dev \
-        libnss3-dev \
-        libssl-dev \
-        libreadline-dev \
-        libffi-dev \
-        libsqlite3-dev \
-        wget \
-        curl \
-        libbz2-dev && \
-    wget https://www.python.org/ftp/python/3.10.10/Python-3.10.10.tgz -O /tmp/python3.tgz && \
-    mkdir -p /tmp/python3 && \
-    tar -xf /tmp/python3.tgz -C /tmp/python3 --strip-components 1 && \
-    cd /tmp/python3 && \
-    ./configure && \
-    make -j 4 && \
-    make altinstall && \
-    cd / && \
     # Pip
     curl https://bootstrap.pypa.io/get-pip.py | python3.10 && \
     # Base packages
@@ -77,8 +56,8 @@ RUN set -xe && \
     pip install cython && \
     pip install -r https://raw.githubusercontent.com/NAStool/nas-tools/master/requirements.txt && \
     # Clear
-    apt-get autoremove && \
-    apt-get clean && \
+    apt-get autoremove -y && \
+    apt-get clean -y && \
     rm -rf \
         /tmp/* \
         /root/.cache \
