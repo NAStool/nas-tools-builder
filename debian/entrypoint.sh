@@ -77,7 +77,7 @@ groupmod -o -g "$PGID" nt
 usermod -o -u "$PUID" nt
 
 # 创建目录、权限设置
-chown -R nt:nt "${WORKDIR}" "${NT_HOME}" /usr/lib/chromium /config /etc/hosts
+chown -R nt:nt "${WORKDIR}" "${NT_HOME}" /usr/lib/chromium /usr/bin/chromedriver /config /etc/hosts
 export PATH=${PATH}:/usr/lib/chromium
 
 # 执行扩展脚本

@@ -37,7 +37,7 @@ RUN set -xe && \
     apt-get install -y \
         chromium \
         chromium-driver && \
-    ln -sf /usr/bin/chromedriver /usr/lib/chromium && \
+    ln -sf /usr/bin/chromedriver /usr/lib/chromium/chromedriver && \
     # PM2
     npm install pm2 -g && \
     # Rclone
