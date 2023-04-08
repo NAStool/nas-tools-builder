@@ -37,7 +37,7 @@ RUN set -xe && \
     apt-get install -y \
         chromium \
         chromium-driver && \
-    ln -sf /usr/bin/chromedriver /usr/lib/chromium && \
+    ln -sf /usr/bin/chromedriver /usr/lib/chromium/chromedriver && \
     # PM2
     npm install pm2 -g && \
     # Rclone
@@ -51,11 +51,14 @@ RUN set -xe && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 2 && \
     update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 3 && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 2 && \
+    # Pip requirements prepare
+    apt-get install -y build-essential && \
     # Pip requirements
     pip install --upgrade pip setuptools wheel && \
     pip install cython && \
     pip install -r https://raw.githubusercontent.com/NAStool/nas-tools/master/requirements.txt && \
     # Clear
+    apt-get remove -y build-essential && \
     apt-get autoremove -y && \
     apt-get clean -y && \
     rm -rf \
