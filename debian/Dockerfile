@@ -4,15 +4,11 @@ RUN set -xe && \
     export DEBIAN_FRONTEND="noninteractive" && \
     apt-get update -y && \
     apt-get upgrade -y && \
-    # locale
-    apt-get install -y \
-        apt-utils \
-        locales && \
+    # Set locale
+    apt-get install -y locales && \
     locale-gen zh_CN.UTF-8 && \
-    # ps
+    # Install ps
     apt-get install -y procps && \
-    # Pip
-    curl https://bootstrap.pypa.io/get-pip.py | python3.10 && \
     # Base packages
     apt-get install -y \
         git \
@@ -94,8 +90,8 @@ RUN set -xe \
     && git config --global pull.ff only \
     && git clone -b master ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
     && git config --global --add safe.directory ${WORKDIR} \
-    && rm -rf ${WORKDIR}/docker/entrypoint.sh
-
-COPY --chmod=755 entrypoint.sh /entrypoint.sh
+    && rm -rf ${WORKDIR}/docker/entrypoint.sh \
+    && wget https://github.com/NAStool/nas-tools-builder/raw/main/debian/entrypoint.sh -O /entrypoint.sh \
+    && chmod +x /entrypoint.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
