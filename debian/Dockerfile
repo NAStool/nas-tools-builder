@@ -17,6 +17,7 @@ RUN set -xe && \
         gosu \
         zip \
         bash \
+        curl \
         fuse3 \
         xvfb \
         inotify-tools \
@@ -24,6 +25,7 @@ RUN set -xe && \
         dumb-init \
         ffmpeg \
         redis \
+        wget \
         sudo && \
     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo "${TZ}" > /etc/timezone && \
