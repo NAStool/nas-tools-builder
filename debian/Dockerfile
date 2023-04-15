@@ -1,9 +1,11 @@
-FROM ddsderek/nas-tools:debian-base
+FROM scratch
+
+COPY --from=python:3.10.10-slim-bullseye / /
 
 RUN set -xe && \
     export DEBIAN_FRONTEND="noninteractive" && \
     apt-get update -y && \
-    # Base packages
+    apt-get install -y wget bash && \
     apt-get install -y $(echo $(wget --no-check-certificate -qO- https://github.com/NAStool/nas-tools-builder/raw/main/debian/package_list.txt)) && \
     # zone time
     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
@@ -14,6 +16,11 @@ RUN set -xe && \
     ln -sf /usr/sbin/gosu /usr/bin/su-exec && \
     # chromedriver
     ln -sf /usr/bin/chromedriver /usr/lib/chromium/chromedriver && \
+    # Python settings
+    update-alternatives --install /usr/bin/python python /usr/local/bin/python3.10 3 && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.9 2 && \
+    update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 3 && \
+    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 2 && \
     # PM2
     npm install pm2 -g && \
     # Rclone
@@ -22,11 +29,6 @@ RUN set -xe && \
     if [ "$(uname -m)" = "x86_64" ]; then ARCH=amd64; elif [ "$(uname -m)" = "aarch64" ]; then ARCH=arm64; fi && \
     curl https://dl.min.io/client/mc/release/linux-${ARCH}/mc --create-dirs -o /usr/bin/mc && \
     chmod +x /usr/bin/mc && \
-    # Python settings
-    update-alternatives --install /usr/bin/python python /usr/local/bin/python3.10 3 && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3.9 2 && \
-    update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 3 && \
-    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 2 && \
     # Pip requirements prepare
     apt-get install -y build-essential && \
     # Pip requirements
@@ -70,7 +72,6 @@ RUN set -xe \
     && git config --global pull.ff only \
     && git clone -b master ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
     && git config --global --add safe.directory ${WORKDIR} \
-    && rm -rf ${WORKDIR}/docker/entrypoint.sh \
     && wget https://github.com/NAStool/nas-tools-builder/raw/main/debian/entrypoint.sh -O /entrypoint.sh \
     && chmod +x /entrypoint.sh
 
