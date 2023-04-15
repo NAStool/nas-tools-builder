@@ -18,7 +18,8 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/nas-tools
 
-      - name: Get latest release tag
+      - 
+        name: Get latest release tag
         id: set-version
         run: |
           NT_VERSION=$(wget --no-check-certificate -qO- https://raw.githubusercontent.com/NAStool/nas-tools/master/version.py | sed -ne "s/APP_VERSION\s=\s'v\(.*\)'/\1/gp")
