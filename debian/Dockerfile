@@ -3,38 +3,16 @@ FROM ddsderek/nas-tools:debian-base
 RUN set -xe && \
     export DEBIAN_FRONTEND="noninteractive" && \
     apt-get update -y && \
-    apt-get upgrade -y && \
-    # Set locale
-    apt-get install -y locales && \
-    locale-gen zh_CN.UTF-8 && \
-    # Install ps
-    apt-get install -y procps && \
     # Base packages
-    apt-get install -y \
-        git \
-        musl-dev \
-        tzdata \
-        gosu \
-        zip \
-        bash \
-        curl \
-        fuse3 \
-        xvfb \
-        inotify-tools \
-        npm \
-        dumb-init \
-        ffmpeg \
-        redis \
-        wget \
-        sudo && \
+    apt-get install -y $(echo $(wget --no-check-certificate -qO- https://github.com/NAStool/nas-tools-builder/raw/main/debian/package_list.txt)) && \
+    # zone time
     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
     echo "${TZ}" > /etc/timezone && \
+    # locale
+    locale-gen zh_CN.UTF-8 && \
     # su-exec gosu
     ln -sf /usr/sbin/gosu /usr/bin/su-exec && \
-    # Chromium
-    apt-get install -y \
-        chromium \
-        chromium-driver && \
+    # chromedriver
     ln -sf /usr/bin/chromedriver /usr/lib/chromium/chromedriver && \
     # PM2
     npm install pm2 -g && \
