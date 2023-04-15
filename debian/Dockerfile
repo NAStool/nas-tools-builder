@@ -7,9 +7,6 @@ RUN set -xe && \
     apt-get update -y && \
     apt-get install -y wget bash && \
     apt-get install -y $(echo $(wget --no-check-certificate -qO- https://github.com/NAStool/nas-tools-builder/raw/main/debian/package_list.txt)) && \
-    # zone time
-    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
-    echo "${TZ}" > /etc/timezone && \
     # locale
     locale-gen zh_CN.UTF-8 && \
     # su-exec gosu
@@ -45,7 +42,8 @@ RUN set -xe && \
         /var/lib/apt/lists/* \
         /var/tmp/*
 
-ENV TZ="Asia/Shanghai" \
+ENV LANG="zh_CN.UTF-8" \
+    TZ="Asia/Shanghai" \
     NASTOOL_CONFIG="/config/config.yaml" \
     NASTOOL_AUTO_UPDATE=true \
     NASTOOL_CN_UPDATE=true \
