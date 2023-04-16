@@ -1,4 +1,4 @@
-name: Build NAStool debian image  
+name: Build NAStool dev debian image  
 
 on:
     workflow_dispatch:
