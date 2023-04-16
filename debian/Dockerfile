@@ -1,16 +1,17 @@
-FROM scratch
+FROM scratch AS Builder
 
 COPY --from=python:3.10.10-slim-bullseye / /
-
+COPY --from=shinsenter/s6-overlay / /
 RUN set -xe && \
     export DEBIAN_FRONTEND="noninteractive" && \
     apt-get update -y && \
     apt-get install -y wget bash && \
     apt-get install -y $(echo $(wget --no-check-certificate -qO- https://github.com/NAStool/nas-tools-builder/raw/main/debian/package_list.txt)) && \
+    # zone time
+    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+    echo "${TZ}" > /etc/timezone && \
     # locale
     locale-gen zh_CN.UTF-8 && \
-    # su-exec gosu
-    ln -sf /usr/sbin/gosu /usr/bin/su-exec && \
     # chromedriver
     ln -sf /usr/bin/chromedriver /usr/lib/chromium/chromedriver && \
     # Python settings
@@ -18,8 +19,6 @@ RUN set -xe && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 2 && \
     update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.10 3 && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 2 && \
-    # PM2
-    npm install pm2 -g && \
     # Rclone
     curl https://rclone.org/install.sh | bash && \
     # Minio
@@ -41,8 +40,18 @@ RUN set -xe && \
         /root/.cache \
         /var/lib/apt/lists/* \
         /var/tmp/*
+RUN ln -sf /command/with-contenv /usr/bin/with-contenv
+COPY --chmod=755 ./rootfs /
 
-ENV LANG="zh_CN.UTF-8" \
+FROM scratch AS APP
+
+COPY --from=Builder / /
+
+ENV S6_SERVICES_GRACETIME=30000 \
+    S6_KILL_GRACETIME=60000 \
+    S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+    S6_SYNC_DISKS=1 \
+    PATH=${PATH}:/usr/lib/chromium:/command \
     TZ="Asia/Shanghai" \
     NASTOOL_CONFIG="/config/config.yaml" \
     NASTOOL_AUTO_UPDATE=true \
@@ -69,8 +78,9 @@ RUN set -xe \
     && echo "nt ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
     && git config --global pull.ff only \
     && git clone -b master ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
-    && git config --global --add safe.directory ${WORKDIR} \
-    && wget https://github.com/NAStool/nas-tools-builder/raw/main/debian/entrypoint.sh -O /entrypoint.sh \
-    && chmod +x /entrypoint.sh
+    && git config --global --add safe.directory ${WORKDIR}
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+EXPOSE 3000
+VOLUME [ "/config" ]
+
+ENTRYPOINT [ "/init" ]
