@@ -19,13 +19,6 @@ jobs:
           images: ${{ secrets.DOCKER_USERNAME }}/nas-tools
 
       - 
-        name: Get latest release tag
-        id: set-version
-        run: |
-          NT_VERSION=$(wget --no-check-certificate -qO- https://raw.githubusercontent.com/NAStool/nas-tools/master/version.py | sed -ne "s/APP_VERSION\s=\s'v\(.*\)'/\1/gp")
-          echo "app_version=$NT_VERSION" >> $GITHUB_ENV
-
-      - 
         name: Set Up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -45,13 +38,12 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./debian
-          file: ./debian/Dockerfile
+          file: ./debian/dev.Dockerfile
           platforms: |
             linux/amd64
             linux/arm64/v8
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/nas-tools:latest
-            ${{ secrets.DOCKER_USERNAME }}/nas-tools:debian
-            ${{ secrets.DOCKER_USERNAME }}/nas-tools:${{ env.app_version }}-debian
+            ${{ secrets.DOCKER_USERNAME }}/nas-tools:latest-beta
+            ${{ secrets.DOCKER_USERNAME }}/nas-tools:debian-beta
           labels: ${{ steps.meta.outputs.labels }}
