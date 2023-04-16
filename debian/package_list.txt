@@ -1,15 +1,12 @@
 git
 musl-dev
 tzdata
-gosu
 zip
 bash
 curl
 fuse3
 xvfb
 inotify-tools
-npm
-dumb-init
 ffmpeg
 redis
 wget
@@ -18,3 +15,4 @@ locales
 chromium
 chromium-driver
 sudo
+netcat
