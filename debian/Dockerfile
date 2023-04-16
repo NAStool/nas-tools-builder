@@ -41,7 +41,6 @@ RUN set -xe && \
         /var/lib/apt/lists/* \
         /var/tmp/*
 RUN ln -sf /command/with-contenv /usr/bin/with-contenv
-COPY --chmod=755 ./rootfs /
 
 FROM scratch AS APP
 
@@ -79,7 +78,9 @@ RUN set -xe \
     && echo "nt ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
     && git config --global pull.ff only \
     && git clone -b master ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
-    && git config --global --add safe.directory ${WORKDIR}
+    && git config --global --add safe.directory ${WORKDIR} \
+    && cp -r ${WORKDIR}/docker/rootfs/* / \
+    && chmod +x -R /etc/cont-init.d /etc/services.d
 
 EXPOSE 3000
 VOLUME [ "/config" ]
