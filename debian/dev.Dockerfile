@@ -30,7 +30,7 @@ RUN set -xe && \
     # Pip requirements
     pip install --upgrade pip setuptools wheel && \
     pip install cython && \
-    pip install -r https://raw.githubusercontent.com/NAStool/nas-tools/master/requirements.txt && \
+    pip install -r https://raw.githubusercontent.com/NAStool/nas-tools/dev/requirements.txt && \
     # Clear
     apt-get remove -y build-essential && \
     apt-get autoremove -y && \
@@ -58,7 +58,7 @@ ENV S6_SERVICES_GRACETIME=30000 \
     NASTOOL_CONFIG="/config/config.yaml" \
     NASTOOL_AUTO_UPDATE=true \
     NASTOOL_CN_UPDATE=true \
-    NASTOOL_VERSION=master \
+    NASTOOL_VERSION=dev \
     REPO_URL="https://github.com/NAStool/nas-tools.git" \
     PYPI_MIRROR="https://pypi.tuna.tsinghua.edu.cn/simple" \
     PUID=0 \
@@ -78,7 +78,7 @@ RUN set -xe \
     && echo 'fs.inotify.max_user_instances=5242880' >> /etc/sysctl.conf \
     && echo "nt ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
     && git config --global pull.ff only \
-    && git clone -b master ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
+    && git clone -b dev ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
     && git config --global --add safe.directory ${WORKDIR}
 
 EXPOSE 3000
