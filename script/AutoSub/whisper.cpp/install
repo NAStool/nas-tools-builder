@@ -7,31 +7,19 @@ Font="\033[0m"
 INFO="[${Green}INFO${Font}]"
 ERROR="[${Red}ERROR${Font}]"
 WARN="[${Yellow}WARN${Font}]"
-INFO(){
+function INFO {
 echo -e "${INFO} ${1}"
 }
-ERROR(){
+function ERROR {
 echo -e "${ERROR} ${1}"
 }
-WARN(){
+function WARN {
 echo -e "${WARN} ${1}"
 }
+function __installer {
 
 MODELS=$1
 INSTALL_SOURCE=$2
-INIT=$3
-
-if [ "$(fdisk -l)" != "" ]; then
-    ERROR "请在容器内执行本脚本"
-    exit 1
-fi
-
-if [[ "${INIT}" = "yes" || "${INIT}" = "true" ]]; then
-    if [ -d /config/plugins/whisper.cpp ]; then
-        INFO "whisper.cpp 以安装"
-        exit 0
-    fi
-fi
 
 if [[ "${INSTALL_SOURCE}" = 'cn' || "${INSTALL_SOURCE}" = 'CN' ]]; then
     whisper_cpp_url=https://ghproxy.com/https://github.com/ggerganov/whisper.cpp.git
@@ -42,7 +30,7 @@ else
 fi
 
 if [ "${MODELS}" = "" ]; then
-    WARN "未指定模型 ，默认使用 small 模型"
+    WARN "未指定模型，默认使用 small 模型"
     MODELS="small"
 fi
 
@@ -92,4 +80,11 @@ else
         fi
     fi
 fi
+}
 
+if [ "$(fdisk -l)" != "" ]; then
+    ERROR "请在容器内执行本脚本"
+    exit 1
+fi
+
+__installer
