@@ -17,3 +17,5 @@ chromium-driver
 sudo
 netcat
 apt-utils
+apt-transport-https
+ca-certificates
