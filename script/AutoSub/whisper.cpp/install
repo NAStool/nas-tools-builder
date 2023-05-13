@@ -20,8 +20,8 @@ function __installer {
 
 if [[ "${INSTALL_SOURCE}" = 'cn' || "${INSTALL_SOURCE}" = 'CN' ]]; then
     whisper_cpp_url=https://ghproxy.com/https://github.com/ggerganov/whisper.cpp.git
-    sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_MIRROR}/g" /etc/apk/repositories
-    apk update -f
+    sudo sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_MIRROR}/g" /etc/apk/repositories
+    sudo apk update -f
 else
     whisper_cpp_url=https://github.com/ggerganov/whisper.cpp.git
 fi
