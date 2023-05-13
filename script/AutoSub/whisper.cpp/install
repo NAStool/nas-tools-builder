@@ -18,9 +18,6 @@ echo -e "${WARN} ${1}"
 }
 function __installer {
 
-MODELS=$1
-INSTALL_SOURCE=$2
-
 if [[ "${INSTALL_SOURCE}" = 'cn' || "${INSTALL_SOURCE}" = 'CN' ]]; then
     whisper_cpp_url=https://ghproxy.com/https://github.com/ggerganov/whisper.cpp.git
     sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_MIRROR}/g" /etc/apk/repositories
@@ -81,6 +78,9 @@ else
     fi
 fi
 }
+
+MODELS=$1
+INSTALL_SOURCE=$2
 
 if [ "$(fdisk -l)" != "" ]; then
     ERROR "请在容器内执行本脚本"
