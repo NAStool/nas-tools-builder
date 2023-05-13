@@ -33,13 +33,13 @@ fi
 
 INFO "开始编译安装 whisper.cpp"
 INFO "下载 whisper.cpp 源码"
-if [ -d /config/plugin/autosub/whisper.cpp ]; then
-    ERROR "/config/plugin/autosub/whisper.cpp 目录已存在，请清除后重新执行脚本。"
+if [ -d /config/plugins/autosub/whisper.cpp ]; then
+    ERROR "/config/plugins/autosub/whisper.cpp 目录已存在，请清除后重新执行脚本。"
     exit 1
 else 
-    mkdir -p /config/plugin/autosub/whisper.cpp
+    mkdir -p /config/plugins/autosub/whisper.cpp
 fi
-git clone -b master ${whisper_cpp_url} /config/plugin/autosub/whisper.cpp --depth=1
+git clone -b master ${whisper_cpp_url} /config/plugins/autosub/whisper.cpp --depth=1
 if [ $? -ne 0 ]; then
     ERROR "whisper.cpp 源码下载失败"
     exit 1
@@ -53,7 +53,7 @@ else
     else
         INFO "编译软件包安装成功"
         INFO "开始编译"
-        cd /config/plugin/autosub/whisper.cpp
+        cd /config/plugins/autosub/whisper.cpp
         echo "CFLAGS += -D_POSIX_C_SOURCE=199309L" > Makefile.NT
         make -f Makefile -f Makefile.NT
         if [ $? -ne 0 ]; then
@@ -68,9 +68,9 @@ else
                 exit 1
             else
                 INFO "models 下载成功"
-                INFO "whisper.cpp 路径: /config/plugin/autosub/whisper.cpp/main"
+                INFO "whisper.cpp 路径: /config/plugins/autosub/whisper.cpp/main"
                 models_dir=$(ls models/ggml*)
-                INFO "whisper.cpp 模型路径: /config/plugin/autosub/whisper.cpp/${models_dir}"
+                INFO "whisper.cpp 模型路径: /config/plugins/autosub/whisper.cpp/${models_dir}"
                 INFO "安装完成！"
                 exit 0
             fi
