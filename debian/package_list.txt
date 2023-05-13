@@ -16,3 +16,4 @@ chromium
 chromium-driver
 sudo
 netcat
+apt-utils
