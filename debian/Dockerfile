@@ -55,7 +55,7 @@ ENV S6_SERVICES_GRACETIME=30000 \
     PATH=${PATH}:/usr/lib/chromium:/command \
     TZ="Asia/Shanghai" \
     NASTOOL_CONFIG="/config/config.yaml" \
-    NASTOOL_AUTO_UPDATE=true \
+    NASTOOL_AUTO_UPDATE=false \
     NASTOOL_CN_UPDATE=true \
     NASTOOL_VERSION=master \
     REPO_URL="https://github.com/NAStool/nas-tools.git" \
@@ -67,6 +67,8 @@ ENV S6_SERVICES_GRACETIME=30000 \
 
 WORKDIR ${WORKDIR}
 
+COPY --from=nastool/nas-tools:latest /nas-tools ${WORKDIR}
+
 RUN set -xe \
     && mkdir ${HOME} \
     && groupadd -r nt -g 911 \
@@ -76,9 +78,6 @@ RUN set -xe \
     && echo 'fs.inotify.max_user_watches=5242880' >> /etc/sysctl.conf \
     && echo 'fs.inotify.max_user_instances=5242880' >> /etc/sysctl.conf \
     && echo "nt ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
-    && git config --global pull.ff only \
-    && git clone -b master ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
-    && git config --global --add safe.directory ${WORKDIR} \
     && cp -r ${WORKDIR}/docker/rootfs/* / \
     && chmod +x -R /etc/cont-init.d /etc/services.d
 
